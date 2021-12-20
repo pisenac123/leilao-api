@@ -29,7 +29,7 @@ public class LeilaoService {
         LeilaoItem itemExistente = leilaoItemRepo.findItemByNome(novoLeilao.getNome());
 
         if(itemExistente != null){
-            return LeilaoResponse.builder().isError(true).mensagem("Leilão com mesmo nome já criado, por favor escolha um nome diferente.").build();
+            return LeilaoResponse.builder().isError(true).mensagem("Já existem um leilão com esse nome. Por favor, tente um nome diferente.").build();
         }
 
         leilaoItemRepo.save(LeilaoItem.builder()

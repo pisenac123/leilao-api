@@ -24,7 +24,7 @@ public class LeilaoController {
     public ResponseEntity<LeilaoResponse> criarLeilao(@Valid @RequestBody LeilaoRequest leilao) {
         try {
             LeilaoResponse leilaoResp = leilaoService.criarLeilao(leilao);
-            return ResponseEntity.status(HttpStatus.CREATED).body(leilaoResp);
+            return leilaoResp.isError() ? ResponseEntity.status(HttpStatus.BAD_REQUEST).body(leilaoResp) : ResponseEntity.status(HttpStatus.CREATED).body(leilaoResp);
         } catch (Exception e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(LeilaoResponse.builder().isError(true).mensagem("Erro ao criar um leilão").build());
