@@ -56,7 +56,7 @@ public class LeilaoService {
 
         LeilaoItem itemsUpdated = leilaoItemRepo.save(item);
 
-        return LeilaoResponse.builder().isError(false).mensagem("Lance criado com sucesso.").build();
+        return LeilaoResponse.builder().isError(false).mensagem("Lance enviado com sucesso.").build();
     }
 
     public List<LeilaoItem> buscarLeiloes() {
