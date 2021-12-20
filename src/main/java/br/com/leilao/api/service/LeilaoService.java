@@ -80,6 +80,6 @@ public class LeilaoService {
 
     public LeilaoResponse deletarLeilao(String id) {
         leilaoItemRepo.deleteById(id);
-        return LeilaoResponse.builder().isError(false).mensagem("Lance criado com sucesso.").build();
+        return LeilaoResponse.builder().isError(false).mensagem("Leilão deletado com sucesso.").build();
     }
 }
