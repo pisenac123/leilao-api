@@ -13,6 +13,9 @@ public interface ItemRepository extends MongoRepository<LeilaoItem, String> {
     @Query("{id:'?0'}")
     LeilaoItem findItemById(String id);
 
+    @Query("{nome:'?0'}")
+    LeilaoItem findItemByNome(String nome);
+
     @Query(value="{usuario:'?0'}", fields="{'nome' : 1, 'dataAbertura' : 1, 'valorInicial' : 1, 'lances' : 1}")
     List<LeilaoItem> findAllLeilaoUserById(String id);
 

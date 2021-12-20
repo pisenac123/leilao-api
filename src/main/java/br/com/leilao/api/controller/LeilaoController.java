@@ -80,13 +80,13 @@ public class LeilaoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deletarLeilaoPeloId(@PathVariable String id) {
+    public ResponseEntity<LeilaoResponse> deletarLeilaoPeloId(@PathVariable String id) {
         try {
-            leilaoService.deletarLeilao(id);
-            return ResponseEntity.ok().body("Leilao deletado com sucesso.");
+            LeilaoResponse leilaoResp = leilaoService.deletarLeilao(id);
+            return ResponseEntity.ok().body(leilaoResp);
         } catch (Exception e) {
             System.out.println(e);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao deletar o leilão.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(LeilaoResponse.builder().isError(true).mensagem("Erro ao deletar o leilão.").build());
         }
     }
 }

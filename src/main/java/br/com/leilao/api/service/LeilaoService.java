@@ -26,6 +26,12 @@ public class LeilaoService {
         String easy = RandomArgsUtils.digits + "ACEFGHJKLMNPQRUVWXYabcdefhijkprstuvwx";
         RandomArgsUtils randomDigits = new RandomArgsUtils(23, new SecureRandom(), easy);
 
+        LeilaoItem itemExistente = leilaoItemRepo.findItemByNome(novoLeilao.getNome());
+
+        if(itemExistente != null){
+            return LeilaoResponse.builder().isError(true).mensagem("Leilão com mesmo nome já criado, por favor escolha um nome diferente.").build();
+        }
+
         leilaoItemRepo.save(LeilaoItem.builder()
                 .id(randomDigits.nextString())
                 .nome(novoLeilao.getNome())
