@@ -3,6 +3,7 @@ package br.com.leilao.api.controller;
 import br.com.leilao.api.item.LeilaoItem;
 import br.com.leilao.api.request.LanceRequest;
 import br.com.leilao.api.request.LeilaoRequest;
+import br.com.leilao.api.response.LeilaoResponse;
 import br.com.leilao.api.service.LeilaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,36 +21,35 @@ public class LeilaoController {
     LeilaoService leilaoService;
 
     @PostMapping("/")
-    public ResponseEntity<String> criarLeilao(@Valid @RequestBody LeilaoRequest leilao) {
-
+    public ResponseEntity<LeilaoResponse> criarLeilao(@Valid @RequestBody LeilaoRequest leilao) {
         try {
-            leilaoService.criarLeilao(leilao);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Leilao criado com sucesso.");
+            LeilaoResponse leilaoResp = leilaoService.criarLeilao(leilao);
+            return ResponseEntity.status(HttpStatus.CREATED).body(leilaoResp);
         } catch (Exception e) {
             System.out.println(e);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao criar leilão.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(LeilaoResponse.builder().isError(true).mensagem("Erro ao criar um leilão").build());
         }
     }
 
     @PostMapping("/lance")
-    public ResponseEntity<String> criarLance(@Valid @RequestBody LanceRequest lance) {
+    public ResponseEntity<LeilaoResponse> criarLance(@Valid @RequestBody LanceRequest lance) {
         try {
-            leilaoService.criarLance(lance);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Lance realizado com sucesso.");
+            LeilaoResponse leilaoResp = leilaoService.criarLance(lance);
+            return ResponseEntity.status(HttpStatus.CREATED).body(leilaoResp);
         } catch (Exception e) {
             System.out.println(e);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao realizar o lance leilão.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(LeilaoResponse.builder().isError(true).mensagem("Erro ao realizar o lance leilão.").build());
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> atualizarLeilao(@PathVariable String id, @Valid @RequestBody LeilaoRequest leilao) {
+    public ResponseEntity<LeilaoItem> atualizarLeilao(@PathVariable String id, @Valid @RequestBody LeilaoRequest leilao) {
         try {
-            leilaoService.atualizarLeilao(id, leilao);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Leilao atualizado com sucesso.");
+            LeilaoItem leilaoAtualizado = leilaoService.atualizarLeilao(id, leilao);
+            return ResponseEntity.ok().body(leilaoAtualizado);
         } catch (Exception e) {
             System.out.println(e);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao atualizar o leilão.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(LeilaoItem.builder().build());
         }
     }
 

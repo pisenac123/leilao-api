@@ -1,5 +1,6 @@
 package br.com.leilao.api.request;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
